@@ -1,6 +1,6 @@
-# Vistora
+# Vista
 
-**Vistora** ist eine moderne, komponentenbasierte **Single Page Application (SPA)**,  
+**Vista** ist eine moderne, komponentenbasierte **Single Page Application (SPA)**,  
 die auf **React.js** basiert und eng mit dem bestehenden Projekt **[CrmAPP](https://github.com/Daddarios/CrmAPP)** verbunden ist.  
 Sie kommuniziert direkt mit einem **ASP.NET Web API**-Backend und stellt Geschäftsdaten über REST-Endpunkte visuell dar.
 
@@ -19,12 +19,12 @@ die sowohl im professionellen als auch im schulischen Umfeld eingesetzt werden k
 ---
 
 ## 🔗 Verknüpftes Projekt
-- [CrmAPP (Backend)](https://github.com/Daddarios/CrmAPP) – Die API, mit der Vistora verbunden ist
+- [CrmAPP (Backend)](https://github.com/Daddarios/CrmAPP) – Die API, mit der Vista verbunden ist
 
 ---
 
 ## 📌 Projektstruktur
-- **Frontend**: React SPA (`Vistora`)
+- **Frontend**: React SPA (`Vista`)
 - **Backend**: ASP.NET Web API (`CrmAPP`)
 - Daten werden über REST geladen und dynamisch dargestellt
 
