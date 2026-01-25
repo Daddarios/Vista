@@ -4,7 +4,7 @@ function KundenList() {
   const [kunden, setKunden] = useState([]);
 
   useEffect(() => {
-    fetch('https://localhost:44312//api/kunden')  // API adresini güncelle
+    fetch('https://localhost:44312/api/kunden')  // API adresini güncelle
       .then(res => res.json())
       .then(data => setKunden(data))
       .catch(err => console.error("Hata:", err));
