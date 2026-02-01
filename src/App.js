@@ -1,20 +1,48 @@
+import React, { useState } from 'react';
+import './App.css';
+
+
+import Sidebar from './components/Sidebar';
 import KundenList from './KundenList';
 import PersonalList from './PersonalList';
 import Wetter from './Wetter';
+import Kanban from './Kanban';
 
 function App() {
+  const [selectedPage, setSelectedPage] = useState('kunden');
+
+  const renderContent = () => {
+    switch (selectedPage) {
+      case 'kanban':
+        return<Kanban/>;
+      case 'kunden':
+        return <KundenList />;
+      case 'personal':
+        return <PersonalList />;
+      case 'wetter':
+        return <Wetter />;
+      default:
+        return <p>Bitte wählen Sie eine Seite aus.</p>;
+    }
+  };
+
   return (
-    <div>
-      <h1>CRM Uygulaması</h1>
-      <KundenList />
-      <hr />
-      <PersonalList />
-      <hr />
-      <Wetter />
+    <div
+      className="app-container"
+      style={{
+         backgroundImage: "url('/Background.jpg')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed", // parallax
+      }}
+    >
+      <Sidebar onSelect={setSelectedPage} />
+      <main className="main-content">
+        {renderContent()}
+      </main>
     </div>
   );
 }
-
-
 
 export default App;

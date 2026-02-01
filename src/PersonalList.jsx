@@ -2,61 +2,62 @@ import { useEffect, useState } from 'react';
 
 function PersonalList() {
   const [personal, setPersonal] = useState([]);
-  const [error, setError] = useState(null);
+  const [fehler, setFehler] = useState(null);
 
   useEffect(() => {
     fetch('https://localhost:44312/api/kunden/personal')
       .then(res => res.json())
-      .then(data => {
-        console.log("Gelen personel verisi:", data);
-        setPersonal(data);
-      })
+      .then(data => setPersonal(data))
       .catch(err => {
-        console.error("Hata:", err);
-        setError("Personel verisi alınamadı.");
+        console.error("Fehler:", err);
+        setFehler("Personaldaten konnten nicht geladen werden.");
       });
   }, []);
 
   return (
     <div>
-      <h2>Personel Listesi</h2>
+      {fehler && <p className="error-message">{fehler}</p>}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      <table border="1" cellPadding="5" style={{ borderCollapse: 'collapse', width: '100%' }}>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Resim</th>
-            <th>Ad Soyad</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Departman</th>
-            <th>Berechtigung</th>
-          </tr>
-        </thead>
-        <tbody style={{textAlign:'center'}}>
-          {personal.map(p => (
-            <tr key={p.personalDatenID}>
-              <td>{p.personalDatenID}</td>
-              <td>
-                <img
-                  src={p.bildUrl}
-                  alt="Profil"
-                  width="50"
-                  height="50"
-                  style={{ borderRadius: '50%' }}
-                />
-              </td>
-              <td>{p.vorname} {p.nachname}</td>
-              <td><a href={`mailto:${p.email}`}>{p.email}</a></td>
-              <td>{p.rufNummer}</td>
-              <td>{p.abteilung}</td>
-              <td style={{ color: 'red' }}>{p.berechtigung}</td>
+      {personal.length === 0 ? (
+        <p>Keine Personaldaten vorhanden.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Bild</th>
+              <th>Vollständiger Name</th>
+              <th>E-Mail</th>
+              <th>Telefon</th>
+              <th>Abteilung</th>
+              <th>Berechtigung</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {personal.map(p => (
+              <tr key={p.personalDatenID}>
+                <td>{p.personalDatenID}</td>
+                <td>
+                  <img
+                    src={p.bildUrl}
+                    alt="Profil"
+                    width="40"
+                    height="40"
+                    style={{ borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                </td>
+                <td>{p.vorname} {p.nachname}</td>
+                <td>
+                  <a href={`mailto:${p.email}`}>{p.email}</a>
+                </td>
+                <td>{p.rufNummer || '-'}</td>
+                <td>{p.abteilung || '-'}</td>
+                <td style={{ color: '#e74c3c', fontWeight: 'bold' }}>{p.berechtigung}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }

@@ -2,24 +2,48 @@ import { useEffect, useState } from 'react';
 
 function KundenList() {
   const [kunden, setKunden] = useState([]);
+  const [fehler, setFehler] = useState(null);
 
   useEffect(() => {
-    fetch('https://localhost:44312/api/kunden')  // API adresini güncelle
+    fetch('https://localhost:44312/api/kunden')
       .then(res => res.json())
       .then(data => setKunden(data))
-      .catch(err => console.error("Hata:", err));
+      .catch(err => {
+        console.error("Fehler:", err);
+        setFehler("Kundendaten konnten nicht geladen werden.");
+      });
   }, []);
 
   return (
     <div>
-      <h2>Kunden Listesi</h2>
-      <ul>
-        {kunden.map(k => (
-          <li key={k.KundenDatenID}>
-            {k.Vorname} - {k.Email} - {k.Unternehmen}
-          </li>
-        ))}
-      </ul>
+      {fehler && <p className="error-message">{fehler}</p>}
+
+      {kunden.length === 0 ? (
+        <p>Keine Kunden zum Anzeigen gefunden.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Vollständiger Name</th>
+              <th>E-Mail</th>
+              <th>Unternehmen</th>
+            </tr>
+          </thead>
+          <tbody>
+            {kunden.map(k => (
+              <tr key={k.KundenDatenID}>
+                <td>{k.KundenDatenID}</td>
+                <td>{k.Vorname} {k.Nachname}</td>
+                <td>
+                  <a href={`mailto:${k.Email}`}>{k.Email || '-'}</a>
+                </td>
+                <td>{k.Unternehmen || '-'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 }
